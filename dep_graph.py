@@ -48,7 +48,7 @@ class DependencyGraph:
         if package in self.graph:
             dependency_list = self.graph[package]
             for item in dependency_list:
-                self.traverse_dependencies(item, indent+4, visited)
+                self.traverse_dependencies(item, indent+2, visited)
                 visited.remove(item)
 
 
