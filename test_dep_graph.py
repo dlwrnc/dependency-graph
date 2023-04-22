@@ -21,7 +21,7 @@ class TestDepGraph(unittest.TestCase):
     def test_bad_file(self):
         with self.assertRaises(FileNotFoundError):
             # pound is not a legal filename character
-            d = DependencyGraph('bad_file#')
+            DependencyGraph('bad_file#')
 
 
 if __name__ == '__main__':
