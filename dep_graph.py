@@ -21,18 +21,18 @@ class DependencyGraph:
         Args:
             json_filepath (str): filepath of the json to consume
         Returns:
-            data (dict): the json as an adjacency list
+            adj_list (dict): the json as an adjacency list
             """
         if not os.path.exists(json_filepath):
             raise FileNotFoundError(f'JSON file {json_filepath} '
                                     f'does not exist on this system.')
         try:
             with open(json_filepath) as json_file:
-                data = json.load(json_file)
+                adj_list = json.load(json_file)
         except JSONDecodeError:
             raise TypeError(f'File {json_filepath} is not in the correct '
                             f'json format.')
-        return data
+        return adj_list
 
     def print_graph(self):
         """Prints the graph in fully-traversed bulletpoint format"""

@@ -7,8 +7,19 @@ from unittest.mock import patch
 class TestDepGraph(unittest.TestCase):
     """Unit tests for depgraph module."""
 
+    def test_json_load(self):
+        """Tests that the json is properly loaded into adjacency
+        list format."""
+        target = {
+            "pkg1": ["pkg2", "pkg3"],
+            "pkg2": ["pkg3"],
+            "pkg3": []
+        }
+        data = DependencyGraph.read_json('test_files/example.json')
+        assert target == data
+
     def test_basic_example(self):
-        """Tests that the example provided prints as expected."""
+        """Tests that the example provided traverses and prints as expected."""
         target_outp = [
             '- pkg1',
             '  - pkg2',
@@ -27,7 +38,7 @@ class TestDepGraph(unittest.TestCase):
         assert target_outp == actual_outp
 
     def test_no_dependencies(self):
-        """Tests that a no-dependency file prints as expected."""
+        """Tests that a no-dependency file traverses and prints as expected."""
         target_outp = [
             '- pkg1',
             '- pkg2',
