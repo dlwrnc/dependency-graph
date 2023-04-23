@@ -5,9 +5,10 @@ from unittest.mock import patch
 
 
 class TestDepGraph(unittest.TestCase):
+    """Unit tests for depgraph module."""
 
     def test_basic_example(self):
-
+        """Tests that the example provided prints as expected."""
         target_outp = [
             '- pkg1',
             '  - pkg2',
@@ -26,6 +27,7 @@ class TestDepGraph(unittest.TestCase):
         assert target_outp == actual_outp
 
     def test_no_dependencies(self):
+        """Tests that a no-dependency file prints as expected."""
         target_outp = [
             '- pkg1',
             '- pkg2',
@@ -40,19 +42,27 @@ class TestDepGraph(unittest.TestCase):
         assert target_outp == actual_outp
 
     def test_cycle_raises(self):
+        """Tests that a two-package-cycle raises the expected error."""
         d = DependencyGraph('test_files/cycle.json')
         with self.assertRaises(CyclicalDependencyException):
             d.print_graph()
 
     def test_complicated_cycle_raises(self):
+        """Tests that a three-package-cycle raises the expected error."""
         d = DependencyGraph('test_files/complicated_cycle.json')
         with self.assertRaises(CyclicalDependencyException):
             d.print_graph()
 
     def test_bad_file(self):
+        """Tests that a nonexistent file raises the expected error."""
         with self.assertRaises(FileNotFoundError):
             # pound is not a legal filename character
             DependencyGraph('bad_file#')
+
+    def test_non_json(self):
+        """Tests that a non-json file raises the expected error."""
+        with self.assertRaises(TypeError):
+            DependencyGraph('test_files/not_json')
 
 
 if __name__ == '__main__':

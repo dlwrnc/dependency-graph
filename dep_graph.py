@@ -1,5 +1,7 @@
 import os
 import json
+import sys
+from json.decoder import JSONDecodeError
 
 
 class CyclicalDependencyException(Exception):
@@ -8,6 +10,7 @@ class CyclicalDependencyException(Exception):
 
 
 class DependencyGraph:
+    """Class to consume and traverse a package list from json format."""
 
     def __init__(self, json_filepath):
         self.graph = self.read_json(json_filepath)  # graph as an adjacent list
@@ -23,8 +26,12 @@ class DependencyGraph:
         if not os.path.exists(json_filepath):
             raise FileNotFoundError(f'JSON file {json_filepath} '
                                     f'does not exist on this system.')
-        with open(json_filepath) as json_file:
-            data = json.load(json_file)
+        try:
+            with open(json_filepath) as json_file:
+                data = json.load(json_file)
+        except JSONDecodeError:
+            raise TypeError(f'File {json_filepath} is not in the correct '
+                            f'json format.')
         return data
 
     def print_graph(self):
@@ -53,5 +60,11 @@ class DependencyGraph:
 
 
 if __name__ == '__main__':
-    d = DependencyGraph('test_files/example.json')
+    if sys.argv:
+        # allow the user to provide the target json from the command line.
+        # we check the second arg, since the first one is this script.
+        target_json = sys.argv[1]
+    else:
+        target_json = 'test_files/example.json'  # default to example file
+    d = DependencyGraph(target_json)
     d.print_graph()
