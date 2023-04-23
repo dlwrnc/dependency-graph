@@ -13,7 +13,7 @@ class DependencyGraph:
     """Class to consume and traverse a package list from json format."""
 
     def __init__(self, json_filepath):
-        self.graph = self.read_json(json_filepath)  # graph as an adjacent list
+        self.graph = self.read_json(json_filepath)
 
     @staticmethod
     def read_json(json_filepath):
@@ -43,7 +43,7 @@ class DependencyGraph:
         """Recursive method to traverse all dependencies.
         Args:
             package (str): package to traverse sub-dependencies of
-            indent (int): number of indents for the current package
+            indent (int): number of indents to print with the current package
             visited (set): set of nodes that have been visited
             """
         if visited is None:
