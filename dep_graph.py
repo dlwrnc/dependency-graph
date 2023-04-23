@@ -42,8 +42,8 @@ class DependencyGraph:
         if visited is None:
             visited = set()
         if package in visited:
-            raise CyclicalDependencyException('CIRCULAR DEPENDENCY DETECTED')
-        print(" " * indent, f"- {package}")
+            raise CyclicalDependencyException('CYCLICAL DEPENDENCY DETECTED')
+        print(" " * indent + f"- {package}")
         visited.add(package)
         if package in self.graph:
             dependency_list = self.graph[package]
