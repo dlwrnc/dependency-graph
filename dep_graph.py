@@ -60,7 +60,7 @@ class DependencyGraph:
 
 
 if __name__ == '__main__':
-    if sys.argv:
+    if len(sys.argv) >= 2:
         # allow the user to provide the target json from the command line.
         # we check the second arg, since the first one is this script.
         target_json = sys.argv[1]
